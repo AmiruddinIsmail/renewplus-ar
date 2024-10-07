@@ -50,7 +50,7 @@ class ProcessInvoice
             ->with([
                 'charges' => function (Builder $builder) {
                     $builder->where('unresolved', true);
-                }
+                },
             ])
             ->whereRaw('DAY(contract_at) in (?)', implode(',', $selectedDays))
             ->whereNull('completed_at')

@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Actions\Jobs;
+
 use App\Models\Customer;
 use App\Models\Invoice;
 
 class ProcessCredit
 {
-    public function handle(Customer $customer, Invoice|null $invoice)
+    public function handle(Customer $customer, ?Invoice $invoice)
     {
         $unresolvedCredits = $customer->credits()->unresolved()->get();
 
-        if (!$invoice) {
+        if (! $invoice) {
             // auto tag unresolved invoices
         }
 
@@ -48,9 +49,9 @@ class ProcessCredit
             $this->attachToInvoice($invoice, $credit);
         }
     }
+
     private function attachToInvoice($invoice, $credit)
     {
         $invoice->credits()->attach($credit, ['amount' => ($credit->amount - $credit->unresolved_amount), 'created_at' => now(), 'updated_at' => now()]);
     }
-
 }

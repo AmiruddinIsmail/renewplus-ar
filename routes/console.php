@@ -20,7 +20,7 @@ Artisan::command('invoice:tagging', function () {
     $amount = 10000; //mt_rand(1000, $customer->subscription_fee);
     $payment = $customer->payments()
         ->create([
-            'reference_no' => 'PAY-' . $today->format('Ymd') . '-' . str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+            'reference_no' => 'PAY-'.$today->format('Ymd').'-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
             'paid_at' => $today,
             'amount' => $amount,
             'unresolved_amount' => $amount,
@@ -65,7 +65,7 @@ Artisan::command('latecharge:create', function () {
     $allowedDay = [7, 14, 21, 28];
     $todayDay = $today->format('d');
 
-    if (!in_array($todayDay, $allowedDay)) {
+    if (! in_array($todayDay, $allowedDay)) {
         return;
     }
 
@@ -79,7 +79,7 @@ Artisan::command('latecharge:create', function () {
         ->withSum([
             'invoices' => function ($builder) {
                 $builder->where('unresolved', true);
-            }
+            },
         ], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
@@ -112,7 +112,7 @@ Artisan::command('test', function () {
         ->withSum([
             'invoices' => function ($builder) {
                 $builder->where('unresolved', true);
-            }
+            },
         ], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
