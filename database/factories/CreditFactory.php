@@ -17,10 +17,13 @@ class CreditFactory extends Factory
      */
     public function definition(): array
     {
+        $amount = $this->faker->numberBetween(1000, 10000);
+
         return [
             'customer_id' => Customer::inRandomOrder()->first(),
             'reference_no' => $this->faker->uuid(),
-            'amount' => $this->faker->numberBetween(1000, 10000),
+            'amount' => $amount,
+            'unresolved_amount' => $amount,
         ];
     }
 }

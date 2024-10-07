@@ -47,9 +47,11 @@ class ProcessInvoice
         // 1. get customers contract
         $customers = Customer::query()
             ->withCount('invoices')
-            ->with(['charges' => function (Builder $builder) {
-                $builder->where('unresolved', true);
-            }])
+            ->with([
+                'charges' => function (Builder $builder) {
+                    $builder->where('unresolved', true);
+                }
+            ])
             ->whereRaw('DAY(contract_at) in (?)', implode(',', $selectedDays))
             ->whereNull('completed_at')
             ->get();
@@ -92,6 +94,8 @@ class ProcessInvoice
                     'unresolved' => false,
                     'invoice_id' => $invoice->id,
                 ]);
+
+                (new ProcessCredit)->handle($customer, $invoice);
 
                 (new ProcessPaymentTagging)->handle($today->format('Y-m-d'));
                 $invoice->refresh();

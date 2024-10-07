@@ -28,4 +28,9 @@ class Credit extends Model
     {
         return $this->morphMany(Transaction::class, 'transactionable');
     }
+
+    public function scopeUnresolved(): void
+    {
+        $this->where('unresolved', true);
+    }
 }

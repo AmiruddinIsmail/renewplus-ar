@@ -20,7 +20,7 @@ Artisan::command('invoice:tagging', function () {
     $amount = 10000; //mt_rand(1000, $customer->subscription_fee);
     $payment = $customer->payments()
         ->create([
-            'reference_no' => 'PAY-'.$today->format('Ymd').'-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+            'reference_no' => 'PAY-' . $today->format('Ymd') . '-' . str_pad($customer->id, 4, '0', STR_PAD_LEFT),
             'paid_at' => $today,
             'amount' => $amount,
             'unresolved_amount' => $amount,
@@ -41,9 +41,9 @@ Artisan::command('invoice:tagging', function () {
 
 Artisan::command('invoice:create', function () {
     // 2021-02-07;
-    $runningDate = Carbon::parse('2021-09-29');
+    $runningDate = Carbon::parse('2021-09-13');
 
-    $today = Carbon::parse('2022-07-29');
+    $today = Carbon::parse('2021-10-13');
 
     while ($runningDate->lte($today)) {
         (new ProcessInvoice)->handle($runningDate->format('Y-m-d'));
@@ -65,7 +65,7 @@ Artisan::command('latecharge:create', function () {
     $allowedDay = [7, 14, 21, 28];
     $todayDay = $today->format('d');
 
-    if (! in_array($todayDay, $allowedDay)) {
+    if (!in_array($todayDay, $allowedDay)) {
         return;
     }
 
@@ -76,20 +76,24 @@ Artisan::command('latecharge:create', function () {
 
     // 2. get customers
     $customers = Customer::query()
-        ->withSum(['invoices' => function ($builder) {
-            $builder->where('unresolved', true);
-        }], 'unresolved_amount')
+        ->withSum([
+            'invoices' => function ($builder) {
+                $builder->where('unresolved', true);
+            }
+        ], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
         ->get();
 
     $runningNo = 1;
     foreach ($customers as $customer) {
-        if (Charge::isLateChargeable(
-            unresolvedInvoiceAmount: $customer->invoices_sum_unresolved_amount ?? 0,
-            invoiceDate: Carbon::parse($customer->invoices()->latest()->first()->issue_at),
-            lateChargeDate: $today,
-        )) {
+        if (
+            Charge::isLateChargeable(
+                unresolvedInvoiceAmount: $customer->invoices_sum_unresolved_amount ?? 0,
+                invoiceDate: Carbon::parse($customer->invoices()->latest()->first()->issue_at),
+                lateChargeDate: $today,
+            )
+        ) {
             Charge::create([
                 'customer_id' => $customer->id,
                 'reference_no' => Charge::referenceNoConvention(runningNo: $runningNo++, today: $today),
@@ -105,9 +109,11 @@ Artisan::command('latecharge:create', function () {
 
 Artisan::command('test', function () {
     $c = Customer::query()
-        ->withSum(['invoices' => function ($builder) {
-            $builder->where('unresolved', true);
-        }], 'unresolved_amount')
+        ->withSum([
+            'invoices' => function ($builder) {
+                $builder->where('unresolved', true);
+            }
+        ], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
         ->find(1);
