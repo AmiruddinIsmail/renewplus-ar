@@ -15,8 +15,8 @@ import {
 import { PropsWithChildren, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { Toaster } from "@/Components/ui/toaster";
 import { SidebarIcon } from "@/Components/SidebarIcon";
+import { Toaster } from "@/Components/ui/toaster";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
     const { url } = usePage();
@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                     className={cn(
                                         "flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground hover:text-primary",
                                         url === item.url &&
-                                            "text-primary bg-muted"
+                                        "text-primary bg-muted"
                                     )}
                                 >
                                     {item.icon && (
@@ -110,7 +110,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                         className={cn(
                                             "flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground hover:text-primary",
                                             url === item.url &&
-                                                "text-primary bg-muted"
+                                            "text-primary bg-muted"
                                         )}
                                     >
                                         {item.icon && (
