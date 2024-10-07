@@ -19,6 +19,7 @@ class InvoiceFactory extends Factory
     {
         $customer = Customer::inRandomOrder()->first();
         $charge_fee = $this->faker->numberBetween(100, 1000);
+
         return [
             'customer_id' => $customer->id,
             'reference_no' => $this->faker->uuid(),

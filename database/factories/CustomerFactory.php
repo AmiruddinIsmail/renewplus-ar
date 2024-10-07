@@ -17,7 +17,7 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
-        $tenure = [12,24,36];
+        $tenure = [12, 24, 36];
         $contractDate = Carbon::parse('2021-01-01');
 
         return [
@@ -27,7 +27,7 @@ class CustomerFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'tenure' => $tenure[mt_rand(0, count($tenure) - 1)],
             'subscription_fee' => $this->faker->numberBetween(1000, 10000),
-            'contract_at' => $contractDate->addDays($this->faker->numberBetween(0,365)),
+            'contract_at' => $contractDate->addDays($this->faker->numberBetween(0, 365)),
             'payment_gateway' => $this->faker->randomElement(['stripe', 'paypal']),
             'payment_reference' => $this->faker->uuid(),
         ];

@@ -2,9 +2,7 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -17,10 +15,7 @@ class UserExportEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public int $userId = 1)
-    {
-
-    }
+    public function __construct(public int $userId = 1) {}
 
     /**
      * Get the channels the event should broadcast on.
@@ -30,7 +25,7 @@ class UserExportEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("user.export.1"),
+            new PrivateChannel('user.export.1'),
         ];
     }
 }

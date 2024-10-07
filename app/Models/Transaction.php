@@ -12,7 +12,7 @@ class Transaction extends Model
 
     protected $guarded = [];
 
-    public function transactionable():MorphTo
+    public function transactionable(): MorphTo
     {
         return $this->morphTo();
     }

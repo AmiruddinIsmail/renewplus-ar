@@ -5,28 +5,22 @@ use App\Actions\Jobs\ProcessLateCharge;
 use App\Actions\Jobs\ProcessPaymentTagging;
 use App\Models\Charge;
 use App\Models\Customer;
-use App\Models\Invoice;
-use App\Models\Payment;
 use Carbon\Carbon;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-
-Artisan::command('invoice:tagging', function(){
+Artisan::command('invoice:tagging', function () {
     $today = Carbon::parse('2021-10-30');
 
     $customer = Customer::first();
     $amount = 10000; //mt_rand(1000, $customer->subscription_fee);
     $payment = $customer->payments()
         ->create([
-            'reference_no' => 'PAY-'. $today->format('Ymd') . '-' . str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+            'reference_no' => 'PAY-'.$today->format('Ymd').'-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
             'paid_at' => $today,
             'amount' => $amount,
             'unresolved_amount' => $amount,
@@ -42,17 +36,16 @@ Artisan::command('invoice:tagging', function(){
 
     (new ProcessPaymentTagging)->handle($today->format('Y-m-d'));
 
-
     $this->comment('OK');
 });
 
-Artisan::command('invoice:create', function(){
+Artisan::command('invoice:create', function () {
     // 2021-02-07;
     $runningDate = Carbon::parse('2021-09-29');
 
     $today = Carbon::parse('2022-07-29');
 
-    while($runningDate->lte($today)){
+    while ($runningDate->lte($today)) {
         (new ProcessInvoice)->handle($runningDate->format('Y-m-d'));
         (new ProcessPaymentTagging)->handle($runningDate->format('Y-m-d'));
         (new ProcessLateCharge)->handle($runningDate->format('Y-m-d'));
@@ -61,7 +54,7 @@ Artisan::command('invoice:create', function(){
     }
 });
 
-Artisan::command('latecharge:create', function(){
+Artisan::command('latecharge:create', function () {
     /*
     4. create transactions record
     */
@@ -69,34 +62,34 @@ Artisan::command('latecharge:create', function(){
     // 1. execute
     $today = today();
 
-    $allowedDay = [7,14,21,28];
+    $allowedDay = [7, 14, 21, 28];
     $todayDay = $today->format('d');
 
-    if(!in_array($todayDay, $allowedDay)){
+    if (! in_array($todayDay, $allowedDay)) {
         return;
     }
 
     // check for existing record
-    if(Charge::where('charged_at', $today)->exists()){
+    if (Charge::where('charged_at', $today)->exists()) {
         return $this->comment('Existing record');
     }
 
     // 2. get customers
     $customers = Customer::query()
-        ->withSum(['invoices' => function($builder){
+        ->withSum(['invoices' => function ($builder) {
             $builder->where('unresolved', true);
-        }], 'unresolved_amount' )
+        }], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
         ->get();
 
     $runningNo = 1;
-    foreach($customers as $customer){
-        if(Charge::isLateChargeable(
+    foreach ($customers as $customer) {
+        if (Charge::isLateChargeable(
             unresolvedInvoiceAmount: $customer->invoices_sum_unresolved_amount ?? 0,
             invoiceDate: Carbon::parse($customer->invoices()->latest()->first()->issue_at),
             lateChargeDate: $today,
-        )){
+        )) {
             Charge::create([
                 'customer_id' => $customer->id,
                 'reference_no' => Charge::referenceNoConvention(runningNo: $runningNo++, today: $today),
@@ -110,11 +103,11 @@ Artisan::command('latecharge:create', function(){
     $this->comment('OK');
 });
 
-Artisan::command('test', function(){
+Artisan::command('test', function () {
     $c = Customer::query()
-        ->withSum(['invoices' => function($builder){
+        ->withSum(['invoices' => function ($builder) {
             $builder->where('unresolved', true);
-        }], 'unresolved_amount' )
+        }], 'unresolved_amount')
         ->whereHas('invoices')
         ->whereNull('completed_at')
         ->find(1);

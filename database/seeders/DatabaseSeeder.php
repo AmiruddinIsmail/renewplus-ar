@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Charge;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -32,9 +31,9 @@ class DatabaseSeeder extends Seeder
 
         // set upfront invoice & payment
         $customers = Customer::all();
-        foreach($customers as $customer){
+        foreach ($customers as $customer) {
             $invoice = $customer->invoices()->create([
-                'reference_no' => 'INV-'. $customer->contract_at->format('Ymd') . '-' . str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+                'reference_no' => 'INV-'.$customer->contract_at->format('Ymd').'-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
                 'issue_at' => $customer->contract_at,
                 'due_at' => Carbon::parse($customer->contract_at->format('Y-m-d'))->addDay(),
                 'subscription_fee' => $customer->subscription_fee,
@@ -45,7 +44,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $payment = $customer->payments()->create([
-                'reference_no' => 'PAY-'. str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+                'reference_no' => 'PAY-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
                 'paid_at' => $customer->contract_at,
                 'amount' => $customer->subscription_fee,
                 'unresolved' => false,

@@ -6,10 +6,7 @@ use App\Models\User;
 
 class Menu
 {
-    public function __construct(public User $user)
-    {
-
-    }
+    public function __construct(public User $user) {}
 
     public function render()
     {
@@ -36,8 +33,8 @@ class Menu
                 'badge' => null,
             ],
         ];
-        if($this->user->hasRole('admin')){
-            $menu [] =[
+        if ($this->user->hasRole('admin')) {
+            $menu[] = [
                 'label' => 'Users',
                 'route' => route('users.index'),
                 'url' => '/users',

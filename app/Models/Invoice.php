@@ -15,8 +15,11 @@ class Invoice extends Model
     use HasFactory;
 
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_OVERDUE = 'overdue';
+
     public const STATUS_PAID = 'paid';
+
     public const STATUS_PARTIAL_PAID = 'partial';
 
     protected $guarded = [];
@@ -61,13 +64,13 @@ class Invoice extends Model
     public function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn(string $value) => Carbon::parse($value)->format('Y-m-d H:i:s')
+            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d H:i:s')
         );
     }
 
     // --------------------- helpers method ---------------
     public static function referenceNoConvention(int $runningNo, Carbon $today): string
     {
-        return 'INV-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
+        return 'INV-'.$today->format('Ymd').'-'.str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

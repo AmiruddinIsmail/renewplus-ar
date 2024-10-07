@@ -19,6 +19,7 @@ class ChargeFactory extends Factory
     public function definition(): array
     {
         $customer = Customer::with('invoices:id')->inRandomOrder()->first();
+
         return [
             'customer_id' => $customer->id,
             'reference_no' => $this->faker->uuid(),

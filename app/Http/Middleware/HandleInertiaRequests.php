@@ -21,7 +21,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -41,12 +41,12 @@ class HandleInertiaRequests extends Middleware
             ],
         ];
 
-        if($request->user() === null){
+        if ($request->user() === null) {
             return $response;
         }
 
         $response['auth']['user'] = $request->user()->load('roles:id,name');
-        $response['roles'] = Cache::remember('roles',(60*60*24), fn()=> Role::all());
+        $response['roles'] = Cache::remember('roles', (60 * 60 * 24), fn () => Role::all());
         $response['menu'] = (new Menu($request->user()))->render();
 
         return $response;

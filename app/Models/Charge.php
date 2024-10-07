@@ -15,6 +15,7 @@ class Charge extends Model
     protected $guarded = [];
 
     public const TYPE_LATE = 'late';
+
     public const TYPE_PENALTY = 'penalty';
 
     public function customer(): BelongsTo
@@ -36,25 +37,31 @@ class Charge extends Model
     public static function isLateChargeable(int $unresolvedInvoiceAmount, Carbon $invoiceDate, Carbon $lateChargeDate, int $unresolvedInvoiceCount = 0): bool
     {
 
-        if($invoiceDate->gt($lateChargeDate)) return false;
+        if ($invoiceDate->gt($lateChargeDate)) {
+            return false;
+        }
 
-        if($unresolvedInvoiceCount >= 2) return true;
+        if ($unresolvedInvoiceCount >= 2) {
+            return true;
+        }
 
-        if($unresolvedInvoiceAmount > 0){
-            if($invoiceDate->diffInDays($lateChargeDate) > 8){
+        if ($unresolvedInvoiceAmount > 0) {
+            if ($invoiceDate->diffInDays($lateChargeDate) > 8) {
                 return true;
-            };
+            }
 
             return false;
         }
 
-        if($invoiceDate->diffInDays($lateChargeDate) > 8) return true;
+        if ($invoiceDate->diffInDays($lateChargeDate) > 8) {
+            return true;
+        }
 
         return false;
     }
 
     public static function referenceNoConvention(int $runningNo, Carbon $today): string
     {
-        return 'LATE-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
+        return 'LATE-'.$today->format('Ymd').'-'.str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

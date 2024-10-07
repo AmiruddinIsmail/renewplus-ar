@@ -13,15 +13,15 @@ class UserTable
     public function handle(int $limit = 10): LengthAwarePaginator
     {
         return QueryBuilder::for(User::class)
-        ->allowedSorts('id','name', 'email')
-        ->allowedFilters(
-            AllowedFilter::callback('search', function(Builder $query, $value) :void{
-                $query
-                    ->where('name', 'like', '%'.$value.'%')
-                    ->orWhere('email', 'like', '%'.$value.'%');
-            })
-        )
-        ->paginate($limit)
-        ->withQueryString();
+            ->allowedSorts('id', 'name', 'email')
+            ->allowedFilters(
+                AllowedFilter::callback('search', function (Builder $query, $value): void {
+                    $query
+                        ->where('name', 'like', '%'.$value.'%')
+                        ->orWhere('email', 'like', '%'.$value.'%');
+                })
+            )
+            ->paginate($limit)
+            ->withQueryString();
     }
 }

@@ -13,7 +13,7 @@ class CustomerController extends Controller
     public function index(Request $request, CustomerTable $action): Response
     {
         return Inertia::render('Customers/Index', [
-            "table" => fn() => CustomerResource::collection($action->handle($request->limit ?? 10)),
+            'table' => fn () => CustomerResource::collection($action->handle($request->limit ?? 10)),
         ]);
     }
 }

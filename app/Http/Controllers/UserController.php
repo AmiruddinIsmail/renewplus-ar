@@ -10,14 +10,14 @@ use Inertia\Response;
 
 class UserController extends Controller
 {
-    public function index(Request $request, UserTable $action) :Response
+    public function index(Request $request, UserTable $action): Response
     {
         return Inertia::render('Users/Index', [
-            "table" => fn() => UserResource::collection($action->handle($request->limit ?? 10)),
+            'table' => fn () => UserResource::collection($action->handle($request->limit ?? 10)),
         ]);
     }
 
-    public function create() :Response
+    public function create(): Response
     {
         return Inertia::render('Users/Create');
     }

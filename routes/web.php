@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
 Route::redirect('/', 'login');
 
 Route::middleware('auth')->group(function () {
@@ -13,11 +12,11 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::prefix('customers')->group(function(){
+    Route::prefix('customers')->group(function () {
         Route::get('', [App\Http\Controllers\CustomerController::class, 'index'])->name('customers.index');
     });
 
-    Route::prefix('invoices')->group(function(){
+    Route::prefix('invoices')->group(function () {
         Route::get('', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices.index');
     });
 
@@ -25,8 +24,7 @@ Route::middleware('auth')->group(function () {
     //     Route::get('', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
     // });
 
-
-    Route::prefix('users')->group(function(){
+    Route::prefix('users')->group(function () {
         Route::get('', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::get('create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
         Route::post('', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');

@@ -13,17 +13,17 @@ class CustomerTable
     public function handle(int $limit): LengthAwarePaginator
     {
         return QueryBuilder::for(Customer::class)
-            ->withSum(['invoices' => function($builder){
+            ->withSum(['invoices' => function ($builder) {
                 $builder->where('unresolved', true);
-            }], 'unresolved_amount' )
-            ->allowedSorts('id','name', 'email', 'phone', 'tenure', 'contract_at', 'subscription_fee')
+            }], 'unresolved_amount')
+            ->allowedSorts('id', 'name', 'email', 'phone', 'tenure', 'contract_at', 'subscription_fee')
             ->allowedFilters(
-                AllowedFilter::callback('search', function(Builder $query, $value) :void{
+                AllowedFilter::callback('search', function (Builder $query, $value): void {
                     $query
                         ->where('name', 'like', '%'.$value.'%')
-                        ->orWhere('tenure',  $value)
-                        ->orWhere('subscription_fee',  str_replace(['.', ',', ' '], '' , $value))
-                        ->orWhere('contract_at', 'like' , '%'.$value.'%');
+                        ->orWhere('tenure', $value)
+                        ->orWhere('subscription_fee', str_replace(['.', ',', ' '], '', $value))
+                        ->orWhere('contract_at', 'like', '%'.$value.'%');
                 })
             )
             ->paginate($limit)
