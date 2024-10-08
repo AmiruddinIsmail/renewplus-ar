@@ -7,7 +7,7 @@ use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ProcessPaymentTagging
+class ProcessPayment
 {
     public function handle(?string $date = null): void
     {
@@ -17,6 +17,7 @@ class ProcessPaymentTagging
         }
 
         DB::transaction(function () use ($today): void {
+
             // list of unresolved payment
             $payments = Payment::query()
                 ->withSum('invoices', 'invoice_payment.amount')
@@ -24,18 +25,17 @@ class ProcessPaymentTagging
                 ->where('paid_at', '<=', $today)
                 ->get();
 
-            foreach ($payments as $index => $payment) {
+            foreach ($payments as $payment) {
 
-                // balance = payment - tagged payments
                 $balancePaymentAmount = $payment->amount - ($payment->invoices_sum_invoice_paymentamount + 0);
                 if ($balancePaymentAmount <= 0) {
                     $payment->unresolved = false;
+                    $payment->unresolved_amount = 0;
                     $payment->save();
 
                     continue;
                 }
 
-                // list of upaid invoices by customer
                 $invoices = Invoice::query()
                     ->withSum('payments', 'invoice_payment.amount')
                     ->where('customer_id', $payment->customer_id)
@@ -43,6 +43,7 @@ class ProcessPaymentTagging
                     ->get();
 
                 foreach ($invoices as $invoice) {
+
                     // set invoice paid if already tag with old payments
                     $balanceInvoiceAmount = ($invoice->subscription_fee + $invoice->charge_fee) - ($invoice->payments_sum_invoice_paymentamount + 0);
                     if ($balanceInvoiceAmount <= 0) {
@@ -79,7 +80,7 @@ class ProcessPaymentTagging
                     $invoice->status = Invoice::STATUS_PAID;
                     $invoice->save();
                     $invoice->payments()->attach($payment, ['amount' => $balanceInvoiceAmount, 'created_at' => now(), 'updated_at' => now()]);
-                    $balancePaymentAmount = $balancePaymentAmount - $balanceInvoiceAmount;
+                    $balancePaymentAmount -= $balanceInvoiceAmount;
                     $payment->unresolved_amount = $balancePaymentAmount;
                     $payment->save();
                 }

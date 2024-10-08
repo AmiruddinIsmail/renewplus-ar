@@ -20,35 +20,39 @@ class ResolvedPayment
                 $payment->unresolved_amount = $balancePayment;
                 $payment->save();
 
+                $this->attachToInvoice($invoice, $payment, $invoice->unresolved_amount);
+
                 $invoice->unresolved = false;
                 $invoice->unresolved_amount = 0;
                 $invoice->status = Invoice::STATUS_PAID;
                 $invoice->save();
-                $this->attachToInvoice($invoice, $payment);
                 break;
             }
+
+            $amountCharged = $payment->unresolved_amount;
 
             $payment->unresolved = false;
             $payment->unresolved_amount = 0;
             $payment->save();
 
             if ($balancePayment === 0) {
+                $this->attachToInvoice($invoice, $payment, $amountCharged);
+
                 $invoice->unresolved = false;
                 $invoice->unresolved_amount = 0;
                 $invoice->status = Invoice::STATUS_PAID;
                 $invoice->save();
-                $this->attachToInvoice($invoice, $payment);
                 break;
             }
 
+            $this->attachToInvoice($invoice, $payment, $amountCharged);
             $invoice->unresolved_amount = abs($balancePayment);
             $invoice->save();
-            $this->attachToInvoice($invoice, $payment);
         }
     }
 
-    private function attachToInvoice(Invoice $invoice, Payment $payment): void
+    private function attachToInvoice(Invoice $invoice, Payment $payment, int $amount): void
     {
-        $invoice->payments()->attach($payment, ['amount' => ($payment->amount - $payment->unresolved_amount), 'created_at' => now(), 'updated_at' => now()]);
+        $invoice->payments()->attach($payment, ['amount' => $amount, 'created_at' => now(), 'updated_at' => now()]);
     }
 }

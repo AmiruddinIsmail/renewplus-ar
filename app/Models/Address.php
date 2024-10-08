@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -23,8 +24,8 @@ class Address extends Model
         return $this->morphTo();
     }
 
-    public function scopeHome()
+    public function scopeHome(Builder $query)
     {
-        return $this->where('type', self::TYPE_HOME);
+        $query->where('type', self::TYPE_HOME);
     }
 }

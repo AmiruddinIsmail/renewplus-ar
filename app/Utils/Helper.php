@@ -35,6 +35,6 @@ class Helper
 
     public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $today): string
     {
-        return $prefix.'-'.$today->format('Ymd').'-'.str_pad($runningNo, 6, '0', STR_PAD_LEFT);
+        return $prefix . '-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

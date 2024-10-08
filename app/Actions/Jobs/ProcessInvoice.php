@@ -6,6 +6,7 @@ use App\Actions\Charges\ResolvedCharge;
 use App\Actions\Credits\ResolvedCredit;
 use App\Actions\Invoices\CreateInvoice;
 use App\Actions\Payments\ResolvedPayment;
+use App\Actions\Simulations\PaymentCreation;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Utils\Helper;
@@ -28,15 +29,8 @@ class ProcessInvoice
             $today = Carbon::parse($date);
         }
         $days = Helper::monthlyAniversaryDays($today);
-
         // 1. get customers contract
         $customers = Customer::query()
-            ->withCount('invoices')
-            ->with([
-                'charges' => function (Builder $builder) {
-                    $builder->where('unresolved', true);
-                },
-            ])
             ->monthlyAniversary($days)
             ->whereNull('completed_at')
             ->get();
@@ -47,7 +41,7 @@ class ProcessInvoice
 
                 // 1. create invoice
                 $invoice = (new CreateInvoice)->handle(invoiceDate: $today, customer: $customer, data: [
-                    'reference_no' => Invoice::referenceNoConvention($runningNo++, $today),
+                    'reference_no' => Helper::referenceNoConvention('INV', $runningNo++, $today),
                     'issue_at' => $today,
                     'due_at' => Carbon::parse($today)->addDay(),
                     'subscription_fee' => $customer->subscription_fee,
@@ -74,6 +68,11 @@ class ProcessInvoice
                     'debit' => true,
                     'amount' => $invoice->unresolved_amount,
                 ]);
+
+                if (mt_rand(1, 10) > 5) {
+                    (new PaymentCreation)->handle($today);
+                }
+
             }, 1);
         }
     }

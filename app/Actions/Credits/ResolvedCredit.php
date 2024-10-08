@@ -13,6 +13,9 @@ class ResolvedCredit
         $credits = $customer->credits()->unresolved()->get();
 
         foreach ($credits as $credit) {
+            $unresolvedInvoiceAmount = $invoice->unresolved_amount;
+            $unresolvedCreditAmount = $credit->unresolved_amount;
+
             $balanceCredit = $credit->unresolved_amount - $invoice->unresolved_amount;
 
             if ($balanceCredit > 0) {
@@ -20,6 +23,7 @@ class ResolvedCredit
                 $credit->unresolved_amount = $balanceCredit;
                 $credit->save();
 
+                $invoice->credit_paid = $unresolvedInvoiceAmount;
                 $invoice->unresolved = false;
                 $invoice->unresolved_amount = 0;
                 $invoice->status = Invoice::STATUS_PAID;
@@ -33,6 +37,7 @@ class ResolvedCredit
             $credit->save();
 
             if ($balanceCredit === 0) {
+                $invoice->credit_paid = $unresolvedInvoiceAmount;
                 $invoice->unresolved = false;
                 $invoice->unresolved_amount = 0;
                 $invoice->status = Invoice::STATUS_PAID;
@@ -41,6 +46,7 @@ class ResolvedCredit
                 break;
             }
 
+            $invoice->credit_paid = $unresolvedCreditAmount;
             $invoice->unresolved_amount = abs($balanceCredit);
             $invoice->save();
             $this->attachToInvoice($invoice, $credit);

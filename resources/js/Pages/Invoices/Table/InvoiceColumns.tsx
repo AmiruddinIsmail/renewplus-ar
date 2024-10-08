@@ -3,6 +3,7 @@ import DataTableSortIcon from "@/Components/DataTableSortIcon";
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { Invoice } from "@/types";
+import { Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
@@ -34,6 +35,12 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                             </Button>
                         </div>
                     </>
+                );
+            },
+            cell: ({ row }) => {
+                const invoice = row.original as Invoice;
+                return (
+                    <Link href={route("invoices.show", invoice.id)}>{invoice.reference_no}</Link>
                 );
             },
         },
@@ -112,8 +119,8 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                 const invoice = row.original as Invoice;
                 return (
                     <div className="flex justify-end">
-                        {parseFloat(invoice.subscription_fee) +
-                            parseFloat(invoice.charge_fee)}
+                        {(parseFloat(invoice.subscription_fee) +
+                            parseFloat(invoice.charge_fee)).toFixed(2)}
                     </div>
                 );
             },

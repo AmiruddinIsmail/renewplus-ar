@@ -1,3 +1,7 @@
+import { Charge } from "./charge";
+import { Customer } from "./customer";
+import { Payment } from "./payment";
+
 export type Invoice = {
     id: number;
     customer_id: number;
@@ -6,9 +10,15 @@ export type Invoice = {
     due_at: string;
     subscription_fee: number;
     charge_fee: number;
+    credit_paid: number;
+    over_paid: number;
     paid_amount: number;
     unresolved: boolean;
     unresolved_amount: number;
     created_at: string;
     updated_at: string;
+
+    payments: Payment[],
+    charges: Charge[],
+    customer: Customer,
 };

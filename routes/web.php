@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('invoices')->group(function () {
         Route::get('', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices.index');
+        Route::get('/{invoice}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoices.show');
     });
 
     // Route::prefix('orders')->group(function(){
@@ -37,4 +38,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('test', [App\Http\Controllers\OrderController::class, 'export']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

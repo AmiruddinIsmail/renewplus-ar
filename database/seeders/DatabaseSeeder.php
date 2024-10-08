@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
+use App\Utils\Helper;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
         $customers = Customer::all();
         foreach ($customers as $customer) {
             $invoice = $customer->invoices()->create([
-                'reference_no' => 'INV-'.$customer->contract_at->format('Ymd').'-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+                'reference_no' => Helper::referenceNoConvention('INV', $customer->id, $customer->contract_at),
                 'issue_at' => $customer->contract_at,
                 'due_at' => Carbon::parse($customer->contract_at->format('Y-m-d'))->addDay(),
                 'subscription_fee' => $customer->subscription_fee,
@@ -44,7 +45,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $payment = $customer->payments()->create([
-                'reference_no' => 'PAY-'.str_pad($customer->id, 4, '0', STR_PAD_LEFT),
+                'reference_no' => Helper::referenceNoConvention('PAY', $customer->id, $customer->contract_at),
                 'paid_at' => $customer->contract_at,
                 'amount' => $customer->subscription_fee,
                 'unresolved' => false,

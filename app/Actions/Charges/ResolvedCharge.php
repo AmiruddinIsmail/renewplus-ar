@@ -21,7 +21,7 @@ class ResolvedCharge
         $invoice->save();
 
         $customer->charges()
-            ->where('id', $charges->pluck('id'))
+            ->whereIn('id', $charges->pluck('id'))
             ->update([
                 'unresolved' => false,
                 'invoice_id' => $invoice->id,

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,22 +35,24 @@ class Charge extends Model
     }
 
     // --------------------- scopes ----------------------
-
-    public function scopeUnresolved(): void
+    public function scopeUnresolved(Builder $query): void
     {
-        $this->where('unresolved', true);
+        $query->where('unresolved', true);
     }
 
-    public function scopeResolved(): void
+    public function scopeResolved(Builder $query): void
     {
-        $this->where('unresolved', false);
+        $query->where('unresolved', false);
     }
 
     // ----------------- helpers function --------------
     public static function isLateChargeable(int $unresolvedInvoiceAmount, Carbon $invoiceDate, Carbon $lateChargeDate, int $unresolvedInvoiceCount = 0): bool
     {
+        if ($unresolvedInvoiceAmount <= 0) {
+            return false;
+        }
 
-        if ($invoiceDate->gt($lateChargeDate)) {
+        if ($invoiceDate->gte($lateChargeDate)) {
             return false;
         }
 
@@ -70,10 +73,5 @@ class Charge extends Model
         }
 
         return false;
-    }
-
-    public static function referenceNoConvention(int $runningNo, Carbon $today): string
-    {
-        return 'LATE-'.$today->format('Ymd').'-'.str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

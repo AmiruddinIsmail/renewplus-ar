@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Invoice extends Model
@@ -33,6 +35,11 @@ class Invoice extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function charges(): HasMany
+    {
+        return $this->hasMany(Charge::class);
+    }
+
     public function payments(): BelongsToMany
     {
         return $this->belongsToMany(Payment::class)->withPivot('amount');
@@ -50,27 +57,21 @@ class Invoice extends Model
 
     // --------------------- scopes ----------------------
 
-    public function scopeUnresolved(): void
+    public function scopeUnresolved(Builder $query): void
     {
-        $this->where('unresolved', true);
+        $query->where('unresolved', true);
     }
 
-    public function scopeResolved(): void
+    public function scopeResolved(Builder $query): void
     {
-        $this->where('unresolved', false);
+        $query->where('unresolved', false);
     }
 
     // --------------------- accessors --------------------
     public function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => Carbon::parse($value)->format('Y-m-d H:i:s')
+            get: fn(string $value) => Carbon::parse($value)->format('Y-m-d H:i:s')
         );
-    }
-
-    // --------------------- helpers method ---------------
-    public static function referenceNoConvention(int $runningNo, Carbon $today): string
-    {
-        return 'INV-'.$today->format('Ymd').'-'.str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

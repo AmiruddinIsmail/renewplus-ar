@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,8 +44,8 @@ class Customer extends Model
     }
 
     // scope
-    public function scopeMonthlyAniversary($days): void
+    public function scopeMonthlyAniversary(Builder $query, array $days): void
     {
-        $this->whereRaw('DAY(contract_at) in (?)', implode(',', $days));
+        $query->whereRaw('DAY(contract_at) in (' . implode(',', $days) . ')');
     }
 }
