@@ -14,7 +14,7 @@ class InvoiceController extends Controller
     public function index(Request $request, InvoiceTable $action): Response
     {
         return Inertia::render('Invoices/Index', [
-            'table' => fn() => InvoiceResource::collection($action->handle($request->limit ?? 10)),
+            'table' => fn () => InvoiceResource::collection($action->handle($request->limit ?? 10)),
         ]);
     }
 
@@ -23,7 +23,7 @@ class InvoiceController extends Controller
         $invoice->load('customer', 'payments', 'charges', 'credits');
 
         return Inertia::render('Invoices/Show', [
-            'invoice' => fn() => InvoiceResource::make($invoice),
+            'invoice' => fn () => InvoiceResource::make($invoice),
         ]);
     }
 }

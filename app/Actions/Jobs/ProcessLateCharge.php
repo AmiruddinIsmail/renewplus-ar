@@ -24,7 +24,7 @@ class ProcessLateCharge
         $allowedDay = [7, 14, 21, 28];
         $todayDay = $today->format('d');
 
-        if (!in_array($todayDay, $allowedDay)) {
+        if (! in_array($todayDay, $allowedDay)) {
             return;
         }
 

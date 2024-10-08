@@ -11,7 +11,6 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Utils\Helper;
 use Carbon\Carbon;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ProcessInvoice

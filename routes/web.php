@@ -38,4 +38,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('test', [App\Http\Controllers\OrderController::class, 'export']);
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

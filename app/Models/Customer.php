@@ -46,6 +46,6 @@ class Customer extends Model
     // scope
     public function scopeMonthlyAniversary(Builder $query, array $days): void
     {
-        $query->whereRaw('DAY(contract_at) in (' . implode(',', $days) . ')');
+        $query->whereRaw('DAY(contract_at) in ('.implode(',', $days).')');
     }
 }

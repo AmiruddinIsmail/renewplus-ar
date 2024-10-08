@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Actions\Simulations;
+
 use App\Actions\Jobs\ProcessPayment;
 use App\Models\Customer;
 use App\Utils\Helper;
