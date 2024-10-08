@@ -41,4 +41,10 @@ class Customer extends Model
     {
         return $this->hasMany(Charge::class);
     }
+
+    // scope
+    public function scopeMonthlyAniversary($days): void
+    {
+        $this->whereRaw('DAY(contract_at) in (?)', implode(',', $days));
+    }
 }

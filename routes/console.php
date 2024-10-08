@@ -40,6 +40,14 @@ Artisan::command('invoice:tagging', function () {
 });
 
 Artisan::command('invoice:create', function () {
+    /*
+        1. get customers by contract(d)
+        2. create the invoice
+        2. get unresolved charges & sync with invoice
+        3. get unresolved credits & sync with invoice
+        4. get unresolved payments & sync with invoice
+    */
+
     // 2021-02-07;
     $runningDate = Carbon::parse('2021-09-13');
 

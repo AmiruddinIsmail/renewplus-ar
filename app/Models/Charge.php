@@ -33,6 +33,18 @@ class Charge extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
+    // --------------------- scopes ----------------------
+
+    public function scopeUnresolved(): void
+    {
+        $this->where('unresolved', true);
+    }
+
+    public function scopeResolved(): void
+    {
+        $this->where('unresolved', false);
+    }
+
     // ----------------- helpers function --------------
     public static function isLateChargeable(int $unresolvedInvoiceAmount, Carbon $invoiceDate, Carbon $lateChargeDate, int $unresolvedInvoiceCount = 0): bool
     {
