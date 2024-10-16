@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use Carbon\Carbon;
+use Exception;
 
 class Helper
 {
@@ -28,13 +29,13 @@ class Helper
             }
 
             return $days;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [$today->day];
         }
     }
 
     public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $today): string
     {
-        return $prefix.'-'.$today->format('Ymd').'-'.str_pad($runningNo, 4, '0', STR_PAD_LEFT);
+        return $prefix . '-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

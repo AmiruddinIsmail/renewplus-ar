@@ -8,7 +8,7 @@ Route::redirect('/', 'login');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
+    Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('invoices')->group(function () {
         Route::get('', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices.index');
-        Route::get('/{invoice}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoices.show');
+        Route::get('{invoice}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoices.show');
     });
 
     // Route::prefix('orders')->group(function(){
@@ -31,11 +31,11 @@ Route::middleware('auth')->group(function () {
         Route::post('', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     });
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('test', [App\Http\Controllers\OrderController::class, 'export']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

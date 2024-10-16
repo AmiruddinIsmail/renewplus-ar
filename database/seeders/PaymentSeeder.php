@@ -22,7 +22,7 @@ class PaymentSeeder extends Seeder
 
                 $amount = mt_rand(1000, 10000);
                 $payment = $customer->payments()->create([
-                    'reference_no' => 'PAY-'.$contractDate->format('Ymd').'-'.str_pad($count, 4, '0', STR_PAD_LEFT),
+                    'reference_no' => 'PAY-' . $contractDate->format('Ymd') . '-' . str_pad($count, 4, '0', STR_PAD_LEFT),
                     'paid_at' => $contractDate,
                     'amount' => $amount,
                     'unresolved_amount' => $amount,

@@ -20,11 +20,11 @@ class InvoiceTable
                 AllowedFilter::exact('status'),
                 AllowedFilter::callback('search', function (Builder $query, $value): void {
                     $query
-                        ->where('reference_no', 'like', '%'.$value.'%')
-                        ->orWhere('subscription_fee', 'like', '%'.$value.'%')
-                        ->orWhere('charge_fee', 'like', '%'.$value.'%')
+                        ->where('reference_no', 'like', '%' . $value . '%')
+                        ->orWhere('subscription_fee', 'like', '%' . $value . '%')
+                        ->orWhere('charge_fee', 'like', '%' . $value . '%')
                         ->orWhereHas('customer', function (Builder $query) use ($value) {
-                            $query->where('name', 'like', '%'.$value.'%');
+                            $query->where('name', 'like', '%' . $value . '%');
                         });
                 })
             )

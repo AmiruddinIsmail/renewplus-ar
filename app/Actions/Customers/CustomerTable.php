@@ -20,10 +20,10 @@ class CustomerTable
             ->allowedFilters(
                 AllowedFilter::callback('search', function (Builder $query, $value): void {
                     $query
-                        ->where('name', 'like', '%'.$value.'%')
+                        ->where('name', 'like', '%' . $value . '%')
                         ->orWhere('tenure', $value)
                         ->orWhere('subscription_fee', str_replace(['.', ',', ' '], '', $value))
-                        ->orWhere('contract_at', 'like', '%'.$value.'%');
+                        ->orWhere('contract_at', 'like', '%' . $value . '%');
                 })
             )
             ->paginate($limit)

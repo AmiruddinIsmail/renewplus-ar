@@ -13,39 +13,12 @@ class Charge extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     public const TYPE_LATE = 'late';
 
     public const TYPE_PENALTY = 'penalty';
 
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    protected $guarded = [];
 
-    public function invoice(): BelongsTo
-    {
-        return $this->belongsTo(Invoice::class);
-    }
-
-    public function transactions(): MorphMany
-    {
-        return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
-    // --------------------- scopes ----------------------
-    public function scopeUnresolved(Builder $query): void
-    {
-        $query->where('unresolved', true);
-    }
-
-    public function scopeResolved(Builder $query): void
-    {
-        $query->where('unresolved', false);
-    }
-
-    // ----------------- helpers function --------------
     public static function isLateChargeable(int $unresolvedInvoiceAmount, Carbon $invoiceDate, Carbon $lateChargeDate, int $unresolvedInvoiceCount = 0): bool
     {
         if ($unresolvedInvoiceAmount <= 0) {
@@ -73,5 +46,30 @@ class Charge extends Model
         }
 
         return false;
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    public function scopeUnresolved(Builder $query): void
+    {
+        $query->where('unresolved', true);
+    }
+
+    public function scopeResolved(Builder $query): void
+    {
+        $query->where('unresolved', false);
     }
 }

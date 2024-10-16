@@ -17,8 +17,8 @@ class UserTable
             ->allowedFilters(
                 AllowedFilter::callback('search', function (Builder $query, $value): void {
                     $query
-                        ->where('name', 'like', '%'.$value.'%')
-                        ->orWhere('email', 'like', '%'.$value.'%');
+                        ->where('name', 'like', '%' . $value . '%')
+                        ->orWhere('email', 'like', '%' . $value . '%');
                 })
             )
             ->paginate($limit)

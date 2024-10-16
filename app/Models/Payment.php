@@ -30,8 +30,6 @@ class Payment extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
-    // --------------------- scopes ----------------------
-
     public function scopeUnresolved(Builder $query): void
     {
         $query->where('unresolved', true);

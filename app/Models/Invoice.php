@@ -55,8 +55,6 @@ class Invoice extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
-    // --------------------- scopes ----------------------
-
     public function scopeUnresolved(Builder $query): void
     {
         $query->where('unresolved', true);
@@ -67,7 +65,6 @@ class Invoice extends Model
         $query->where('unresolved', false);
     }
 
-    // --------------------- accessors --------------------
     public function createdAt(): Attribute
     {
         return Attribute::make(
