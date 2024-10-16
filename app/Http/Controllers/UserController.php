@@ -28,7 +28,5 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
         ]);
-
-        dd($data);
     }
 }
