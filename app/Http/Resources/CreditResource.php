@@ -15,7 +15,6 @@ class CreditResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
             'id' => $this->id,
             'reference_no' => $this->reference_no,
