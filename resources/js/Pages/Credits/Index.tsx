@@ -40,7 +40,7 @@ export default function UsersIndex({ table }: { table: Datatable }) {
                         </Breadcrumb>
                     </div>
                     <Button asChild>
-                        <Link href={route("users.create")} as="button">
+                        <Link href={route("credits.create")} as="button">
                             <PlusIcon className="h-4 w-4" /> Create
                         </Link>
                     </Button>

@@ -45,9 +45,9 @@ Artisan::command('simulate:payment-create', function () {
 });
 
 Artisan::command('simulate:invoice-create', function () {
-    $runningDate = Carbon::parse('2021-01-09');
+    $runningDate = Carbon::parse('2021-05-23');
 
-    $today = Carbon::parse('2024-01-01');
+    $today = Carbon::parse('2024-05-01');
     while ($runningDate->lte($today)) {
 
         (new ProcessInvoice(

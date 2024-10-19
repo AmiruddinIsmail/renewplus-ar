@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('credits')->group(function () {
         Route::get('', [App\Http\Controllers\CreditController::class, 'index'])->name('credits.index');
+        Route::get('create', [App\Http\Controllers\CreditController::class, 'create'])->name('credits.create');
+        Route::post('', [App\Http\Controllers\CreditController::class, 'store'])->name('credits.store');
     });
 
     Route::prefix('users')->group(function () {
