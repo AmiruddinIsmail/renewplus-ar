@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
     useEffect(() => {
         if (sorting.length > 0) {
             const sorts = sorting.map(
-                (sort) => `${sort.desc ? "-" : ""}${sort.id}`
+                (sort) => `${sort.desc ? "-" : ""}${sort.id}`,
             );
 
             router.visit(url, {
@@ -101,7 +101,7 @@ export function DataTable<TData, TValue>({
                                                 : flexRender(
                                                       header.column.columnDef
                                                           .header,
-                                                      header.getContext()
+                                                      header.getContext(),
                                                   )}
                                         </TableHead>
                                     );
@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
                                         <TableCell key={cell.id}>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
-                                                cell.getContext()
+                                                cell.getContext(),
                                             )}
                                         </TableCell>
                                     ))}
@@ -141,7 +141,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="md:flex items-center justify-between">
+            <div className="items-center justify-between md:flex">
                 <div className="flex items-center space-x-2">
                     <Select onValueChange={onLimitChange}>
                         <SelectTrigger className="w-16">

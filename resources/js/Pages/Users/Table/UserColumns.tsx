@@ -24,7 +24,7 @@ export const userColumns = (page: number): ColumnDef<User>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -48,7 +48,7 @@ export const userColumns = (page: number): ColumnDef<User>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >

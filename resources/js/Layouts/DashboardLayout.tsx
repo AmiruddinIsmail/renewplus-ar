@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                     description: "User has been exported successfully",
                     variant: "success",
                 });
-            }
+            },
         );
     }, []);
 
@@ -57,9 +57,9 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                     href={item.route}
                                     key={index}
                                     className={cn(
-                                        "flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground hover:text-primary",
+                                        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
                                         url === item.url &&
-                                        "text-primary bg-muted"
+                                            "bg-muted text-primary",
                                     )}
                                 >
                                     {item.icon && (
@@ -108,9 +108,9 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                                         href={item.route}
                                         key={index}
                                         className={cn(
-                                            "flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground hover:text-primary",
+                                            "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
                                             url === item.url &&
-                                            "text-primary bg-muted"
+                                                "bg-muted text-primary",
                                         )}
                                     >
                                         {item.icon && (

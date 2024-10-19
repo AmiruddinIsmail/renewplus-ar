@@ -4,7 +4,7 @@ export type InvoicePayment = {
     amount: number;
     created_at: string;
     updated_at: string;
-}
+};
 
 export type Payment = {
     id: number;
@@ -18,4 +18,4 @@ export type Payment = {
     updated_at: string;
 
     pivot: InvoicePayment;
-}
+};

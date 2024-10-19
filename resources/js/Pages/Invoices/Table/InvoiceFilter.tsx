@@ -15,11 +15,11 @@ export default function InvoiceFilter() {
     const { url } = usePage();
 
     const [search, setSearch] = useState(
-        getParameterByName(encodeURIComponent("filter[search]"), url) ?? ""
+        getParameterByName(encodeURIComponent("filter[search]"), url) ?? "",
     );
 
     const [status, setStatus] = useState(
-        getParameterByName(encodeURIComponent("filter[status]"), url) ?? ""
+        getParameterByName(encodeURIComponent("filter[status]"), url) ?? "",
     );
 
     const isFilterValid = () => search.length > 0 || status.length > 0;
@@ -45,7 +45,7 @@ export default function InvoiceFilter() {
     };
 
     return (
-        <div className="flex items-center mt-4 mb-4 gap-2">
+        <div className="mb-4 mt-4 flex items-center gap-2">
             <Input
                 type="text"
                 placeholder="Search"

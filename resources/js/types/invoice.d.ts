@@ -18,7 +18,7 @@ export type Invoice = {
     created_at: string;
     updated_at: string;
 
-    payments: Payment[],
-    charges: Charge[],
-    customer: Customer,
+    payments: Payment[];
+    charges: Charge[];
+    customer: Customer;
 };

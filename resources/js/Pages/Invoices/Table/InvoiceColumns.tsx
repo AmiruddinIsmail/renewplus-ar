@@ -25,7 +25,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -40,7 +40,9 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
             cell: ({ row }) => {
                 const invoice = row.original as Invoice;
                 return (
-                    <Link href={route("invoices.show", invoice.id)}>{invoice.reference_no}</Link>
+                    <Link href={route("invoices.show", invoice.id)}>
+                        {invoice.reference_no}
+                    </Link>
                 );
             },
         },
@@ -59,7 +61,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -83,7 +85,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -106,7 +108,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >
@@ -119,8 +121,10 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                 const invoice = row.original as Invoice;
                 return (
                     <div className="flex justify-end">
-                        {(parseFloat(invoice.subscription_fee) +
-                            parseFloat(invoice.charge_fee)).toFixed(2)}
+                        {(
+                            parseFloat(invoice.subscription_fee) +
+                            parseFloat(invoice.charge_fee)
+                        ).toFixed(2)}
                     </div>
                 );
             },
@@ -135,7 +139,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >
@@ -182,7 +186,7 @@ export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >

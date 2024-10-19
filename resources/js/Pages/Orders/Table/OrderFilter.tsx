@@ -15,10 +15,10 @@ export default function OrderFilter() {
     const { url } = usePage();
 
     const [search, setSearch] = useState(
-        getParameterByName(encodeURIComponent("filter[name]"), url) ?? ""
+        getParameterByName(encodeURIComponent("filter[name]"), url) ?? "",
     );
     const [status, setStatus] = useState(
-        getParameterByName(encodeURIComponent("filter[status]"), url) ?? ""
+        getParameterByName(encodeURIComponent("filter[status]"), url) ?? "",
     );
 
     const isFilterValid = () => {
@@ -46,7 +46,7 @@ export default function OrderFilter() {
     };
 
     return (
-        <div className="flex items-center mt-2 mb-4 gap-2">
+        <div className="mb-4 mt-2 flex items-center gap-2">
             <Input
                 type="text"
                 placeholder="Search"

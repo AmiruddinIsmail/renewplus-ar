@@ -18,7 +18,7 @@ export const orderTableColumns: ColumnDef<Order>[] = [
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >
@@ -40,7 +40,7 @@ export const orderTableColumns: ColumnDef<Order>[] = [
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >
@@ -66,7 +66,7 @@ export const orderTableColumns: ColumnDef<Order>[] = [
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >
@@ -99,7 +99,7 @@ export const orderTableColumns: ColumnDef<Order>[] = [
                             variant="ghost"
                             onClick={() => {
                                 return column.toggleSorting(
-                                    column.getIsSorted() === "asc"
+                                    column.getIsSorted() === "asc",
                                 );
                             }}
                         >

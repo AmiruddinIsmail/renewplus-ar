@@ -24,7 +24,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -48,7 +48,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -73,7 +73,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -97,7 +97,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
@@ -121,7 +121,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                                 variant="ghost"
                                 onClick={() => {
                                     return column.toggleSorting(
-                                        column.getIsSorted() === "asc"
+                                        column.getIsSorted() === "asc",
                                     );
                                 }}
                             >
