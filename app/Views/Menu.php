@@ -32,6 +32,27 @@ class Menu
                 'icon' => 'Users',
                 'badge' => null,
             ],
+            [
+                'label' => 'Credit Notes',
+                'route' => route('credits.index'),
+                'url' => '/credits',
+                'icon' => 'Users',
+                'badge' => null,
+            ],
+            [
+                'label' => 'Instant Pay',
+                'route' => '#',
+                'url' => '/instant-pay',
+                'icon' => 'Users',
+                'badge' => null,
+            ],
+            [
+                'label' => 'Aging Reports',
+                'route' => '#',
+                'url' => '/aging-reports',
+                'icon' => 'Users',
+                'badge' => null,
+            ],
         ];
         if ($this->user->hasRole('admin')) {
             $menu[] = [

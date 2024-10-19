@@ -6,7 +6,7 @@ import { Invoice } from "@/types";
 import { Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const invoiceColumns = (page: number): ColumnDef<Invoice>[] => {
+export const column = (page: number): ColumnDef<Invoice>[] => {
     return [
         {
             header: "No",

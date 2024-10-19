@@ -1,11 +1,10 @@
 import DataTableIndex from "@/Components/DataTableIndex";
 import DataTableSortIcon from "@/Components/DataTableSortIcon";
-import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const userColumns = (page: number): ColumnDef<User>[] => {
+export const column = (page: number): ColumnDef<User>[] => {
     return [
         {
             header: "No",
@@ -14,12 +13,12 @@ export const userColumns = (page: number): ColumnDef<User>[] => {
             },
         },
         {
-            accessorKey: "name",
+            accessorKey: "reference_no",
             header: ({ column }) => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            Name
+                            Reference No
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -38,12 +37,12 @@ export const userColumns = (page: number): ColumnDef<User>[] => {
             },
         },
         {
-            accessorKey: "email",
+            accessorKey: "customer.name",
             header: ({ column }) => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            Email
+                            Customer Name
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -60,6 +59,14 @@ export const userColumns = (page: number): ColumnDef<User>[] => {
                     </>
                 );
             },
+        },
+        {
+            accessorKey: "amount",
+            header: "amount",
+        },
+        {
+            accessorKey: "unresolved",
+            header: "Unresolved",
         },
         {
             accessorKey: "created_at",

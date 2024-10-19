@@ -5,7 +5,7 @@ import { Button } from "@/Components/ui/button";
 import { Customer } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const customerColumns = (page: number): ColumnDef<Customer>[] => {
+export const column = (page: number): ColumnDef<Customer>[] => {
     return [
         {
             header: "No",

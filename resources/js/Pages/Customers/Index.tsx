@@ -1,4 +1,3 @@
-import { DataTable } from "@/Components/DataTable";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Datatable } from "@/types";
 import { Head, Link } from "@inertiajs/react";
@@ -13,8 +12,7 @@ import {
 } from "@/Components/ui/breadcrumb";
 import { Button } from "@/Components/ui/button";
 import { PlusIcon } from "lucide-react";
-import CustomerFilter from "./Table/CustomerFilter";
-import { customerColumns } from "./Table/CustomerColumns";
+import CustomerTable from "./Table/Index";
 
 export default function CustomerIndex({ table }: { table: Datatable }) {
     return (
@@ -46,12 +44,7 @@ export default function CustomerIndex({ table }: { table: Datatable }) {
                         </Link>
                     </Button>
                 </div>
-                <CustomerFilter />
-                <DataTable
-                    columns={customerColumns(table.meta.current_page)}
-                    data={table.data}
-                    paginator={table}
-                />
+                <CustomerTable table={table} />
             </DashboardLayout>
         </>
     );

@@ -21,9 +21,9 @@ Route::middleware('auth')->group(function () {
         Route::get('{invoice}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoices.show');
     });
 
-    // Route::prefix('orders')->group(function(){
-    //     Route::get('', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
-    // });
+    Route::prefix('credits')->group(function () {
+        Route::get('', [App\Http\Controllers\CreditController::class, 'index'])->name('credits.index');
+    });
 
     Route::prefix('users')->group(function () {
         Route::get('', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
@@ -35,7 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::get('test', [App\Http\Controllers\OrderController::class, 'export']);
 
 require __DIR__ . '/auth.php';

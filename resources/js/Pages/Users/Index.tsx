@@ -1,9 +1,6 @@
-import { DataTable } from "@/Components/DataTable";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Datatable } from "@/types";
 import { Head, Link } from "@inertiajs/react";
-import UserFilter from "./Table/UserFilter";
-import { userColumns } from "./Table/UserColumns";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -14,6 +11,7 @@ import {
 } from "@/Components/ui/breadcrumb";
 import { Button } from "@/Components/ui/button";
 import { PlusIcon } from "lucide-react";
+import UserTable from "./Table/Index";
 
 export default function UsersIndex({ table }: { table: Datatable }) {
     return (
@@ -45,12 +43,7 @@ export default function UsersIndex({ table }: { table: Datatable }) {
                         </Link>
                     </Button>
                 </div>
-                <UserFilter />
-                <DataTable
-                    columns={userColumns(table.meta.current_page)}
-                    data={table.data}
-                    paginator={table}
-                />
+                <UserTable table={table} />
             </DashboardLayout>
         </>
     );

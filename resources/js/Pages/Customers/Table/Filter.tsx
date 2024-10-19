@@ -4,7 +4,7 @@ import { getParameterByName } from "@/lib/utils";
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function CustomerFilter() {
+export const Filter = () => {
     const { url } = usePage();
 
     const [search, setSearch] = useState(
@@ -57,4 +57,4 @@ export default function CustomerFilter() {
             )}
         </div>
     );
-}
+};

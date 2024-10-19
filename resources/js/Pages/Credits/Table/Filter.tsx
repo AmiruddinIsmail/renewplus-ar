@@ -1,45 +1,33 @@
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/Components/ui/select";
 import { getParameterByName } from "@/lib/utils";
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function InvoiceFilter() {
+export const Filter = () => {
     const { url } = usePage();
 
     const [search, setSearch] = useState(
         getParameterByName(encodeURIComponent("filter[search]"), url) ?? "",
     );
 
-    const [status, setStatus] = useState(
-        getParameterByName(encodeURIComponent("filter[status]"), url) ?? "",
-    );
-
-    const isFilterValid = () => search.length > 0 || status.length > 0;
+    const isFilterValid = () => search.length > 0;
 
     const onSearch = (e: any) => {
         e.preventDefault();
         if (!isFilterValid()) return;
 
-        router.visit(route("invoices.index"), {
+        router.visit(route("credits.index"), {
             method: "get",
             data: {
                 "filter[search]": search,
-                "filter[status]": status,
             },
             preserveState: true,
         });
     };
 
     const resetSearch = () => {
-        router.visit(route("invoices.index"), {
+        router.visit(route("credits.index"), {
             preserveState: false,
         });
     };
@@ -53,19 +41,7 @@ export default function InvoiceFilter() {
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && onSearch(e)}
             />
-            <Select onValueChange={setStatus}>
-                <SelectTrigger className="w-[180px]">
-                    <SelectValue
-                        placeholder={status === "" ? "Status" : status}
-                    />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="overdue">Overdue</SelectItem>
-                    <SelectItem value="paid">Paid</SelectItem>
-                    <SelectItem value="partial">Partialy Paid</SelectItem>
-                </SelectContent>
-            </Select>
+
             <Button
                 onClick={onSearch}
                 variant="secondary"
@@ -81,4 +57,4 @@ export default function InvoiceFilter() {
             )}
         </div>
     );
-}
+};

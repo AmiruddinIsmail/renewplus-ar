@@ -14,6 +14,11 @@ class CreateInvoice
             return null;
         }
 
+        // customer already settle payments
+        if (! is_null($customer->completed_at)) {
+            return null;
+        }
+
         // invoices completed
         if ($customer->invoices()->count() >= $customer->tenure) {
             return null;
