@@ -21,16 +21,16 @@ class Charge extends Model
 
     public static function isLateChargeable(int $unresolvedInvoiceAmount, Carbon $invoiceDate, Carbon $lateChargeDate, int $unresolvedInvoiceCount = 0): bool
     {
+        if ($unresolvedInvoiceCount >= 2) {
+            return true;
+        }
+
         if ($unresolvedInvoiceAmount <= 0) {
             return false;
         }
 
         if ($invoiceDate->gte($lateChargeDate)) {
             return false;
-        }
-
-        if ($unresolvedInvoiceCount >= 2) {
-            return true;
         }
 
         if ($unresolvedInvoiceAmount > 0) {

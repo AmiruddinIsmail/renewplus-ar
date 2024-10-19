@@ -1,8 +1,13 @@
 <?php
 
+use App\Actions\Charges\ResolvedCharge;
+use App\Actions\Credits\ResolvedCredit;
+use App\Actions\Invoices\CreateInvoice;
 use App\Actions\Jobs\ProcessInvoice;
 use App\Actions\Jobs\ProcessLateCharge;
 use App\Actions\Jobs\ProcessPayment;
+use App\Actions\Jobs\UpdateInvoiceStatus;
+use App\Actions\Payments\ResolvedPayment;
 use App\Models\Customer;
 use App\Utils\Helper;
 use Carbon\Carbon;
@@ -40,14 +45,26 @@ Artisan::command('simulate:payment-create', function () {
 });
 
 Artisan::command('simulate:invoice-create', function () {
-    $runningDate = Carbon::parse('2021-12-09');
+    $runningDate = Carbon::parse('2021-01-09');
 
     $today = Carbon::parse('2024-01-01');
     while ($runningDate->lte($today)) {
-        (new ProcessInvoice)->handle($runningDate->format('Y-m-d'));
-        // (new ProcessPayment)->handle($runningDate->format('Y-m-d'));
+
+        (new ProcessInvoice(
+            new CreateInvoice,
+            new ResolvedCharge,
+            new ResolvedCredit,
+            new ResolvedPayment,
+        ))->handle($runningDate->format('Y-m-d'));
+
         (new ProcessLateCharge)->handle($runningDate->format('Y-m-d'));
 
+        // (new ProcessPayment)->handle($runningDate->format('Y-m-d'));
         $runningDate->addDay();
     }
+});
+
+Artisan::command('ar-job:update-invoice-status', function () {
+    (new UpdateInvoiceStatus)->handle();
+    $this->comment('OK');
 });

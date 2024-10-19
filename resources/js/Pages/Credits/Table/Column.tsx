@@ -1,5 +1,6 @@
 import DataTableIndex from "@/Components/DataTableIndex";
 import DataTableSortIcon from "@/Components/DataTableSortIcon";
+import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -67,6 +68,20 @@ export const column = (page: number): ColumnDef<User>[] => {
         {
             accessorKey: "unresolved",
             header: "Unresolved",
+            cell: ({ row }) => {
+                switch (row.getValue("unresolved")) {
+                    case 1:
+                        return <Badge variant="destructive">Unresolved</Badge>;
+                    case 0:
+                        return <Badge variant="green">Resolved</Badge>;
+                    default:
+                        return (
+                            <Badge variant="secondary">
+                                {row.getValue("unresolved") as string}
+                            </Badge>
+                        );
+                }
+            },
         },
         {
             accessorKey: "created_at",
