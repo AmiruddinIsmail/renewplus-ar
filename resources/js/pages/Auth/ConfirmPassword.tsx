@@ -31,7 +31,7 @@ export default function ConfirmPassword() {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Confirm Your Password
                     </CardTitle>
                     <CardDescription>
@@ -55,7 +55,7 @@ export default function ConfirmPassword() {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password}
                             </Label>
                         </div>

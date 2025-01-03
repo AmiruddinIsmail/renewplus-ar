@@ -23,8 +23,8 @@ const InvoicePreview = () => {
     );
 
     return (
-        <div className="mx-auto max-w-3xl rounded-lg bg-white p-8 shadow-lg">
-            <div className="mb-8 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+            <div className="flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-800">
                         Invoice
@@ -93,7 +93,7 @@ const InvoicePreview = () => {
                 </table>
             </div>
 
-            <div className="mt-8 flex justify-end">
+            <div className="flex justify-end mt-8">
                 <div className="w-1/3 text-right">
                     <p className="text-lg font-semibold text-gray-800">
                         Total Amount:

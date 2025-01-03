@@ -26,7 +26,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Verify Who You Are
                     </CardTitle>
                     <CardDescription>
@@ -46,7 +46,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             Resend Verification Email
                         </Button>
                     </form>
-                    <Separator className="mb-2 mt-4" />
+                    <Separator className="mt-4 mb-2" />
                     <div className="flex justify-end">
                         <Link
                             href={route("logout")}

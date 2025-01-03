@@ -16,7 +16,7 @@ export default function CustomerOrder({ order }: Props) {
             </CardHeader>
             <CardContent>
                 <form className="grid gap-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-4 grid-cols-2">
                         <div className="grid gap-2">
                             <Label htmlFor="reference_no">Order No</Label>
                             <Input
@@ -39,7 +39,7 @@ export default function CustomerOrder({ order }: Props) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-4 grid-cols-2">
                         <div className="grid gap-2">
                             <Label htmlFor="tenure">Tenure</Label>
                             <Input
@@ -64,7 +64,7 @@ export default function CustomerOrder({ order }: Props) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-4 grid-cols-2">
                         <div className="grid gap-2">
                             <Label htmlFor="payment_gateway">
                                 Payment Provider

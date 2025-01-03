@@ -58,7 +58,7 @@ export const customerInvoicesColumns = (
                                     {row.getValue("reference_no")}
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="max-h-[600px] max-w-screen-xl overflow-y-scroll">
+                            <DialogContent className=" max-w-screen-xl max-h-[600px] overflow-y-scroll">
                                 <DialogHeader>
                                     <DialogTitle>Invoice Detail</DialogTitle>
                                 </DialogHeader>

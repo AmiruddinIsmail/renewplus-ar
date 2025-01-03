@@ -71,7 +71,7 @@ export default function CustomerMenu({
                                     active={item.title === activeName}
                                     className={navigationMenuTriggerStyle()}
                                 >
-                                    <item.icon className="mr-2 h-4 w-4" />
+                                    <item.icon className="h-4 w-4 mr-2" />
                                     {item.title}
                                 </NavigationMenuLink>
                             </Link>

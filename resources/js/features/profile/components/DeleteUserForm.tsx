@@ -97,7 +97,7 @@ export default function DeleteUserForm({
                                     placeholder="Password"
                                 />
 
-                                <Label className="text-red-500">
+                                <Label className=" text-red-500">
                                     {errors.password}
                                 </Label>
                             </div>

@@ -38,7 +38,7 @@ export default function Page({ posts }: Props) {
                 </div>
                 <div>
                     <Deferred data="posts" fallback={<div>Loading...</div>}>
-                        <div className="text-xl">
+                        <div className=" text-xl">
                             {posts &&
                                 posts.map((post) => (
                                     <div key={post}>{post}</div>

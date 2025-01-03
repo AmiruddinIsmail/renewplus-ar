@@ -143,7 +143,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="items-center justify-between md:flex">
+            <div className="md:flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                     <Select onValueChange={onLimitChange}>
                         <SelectTrigger className="w-16">

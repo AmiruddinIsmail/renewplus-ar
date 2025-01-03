@@ -30,7 +30,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Reset Your Password
                     </CardTitle>
                     <CardDescription>
@@ -55,7 +55,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.email}
                             </Label>
                         </div>

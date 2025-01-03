@@ -22,14 +22,14 @@ type Props = {
 export default function PaymentDetail({ payment }: Props) {
     return (
         <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 grid-cols-2">
                 <Card className="flex-1">
                     <CardHeader>
                         <CardTitle>Payment Detail</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid gap-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="reference_no">
                                         Reference No
@@ -56,7 +56,7 @@ export default function PaymentDetail({ payment }: Props) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="tenure">Amount (RM)</Label>
                                     <Input
@@ -69,7 +69,7 @@ export default function PaymentDetail({ payment }: Props) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="tenure">Status</Label>
                                     <Input
@@ -103,7 +103,7 @@ export default function PaymentDetail({ payment }: Props) {
                 <CustomerOrder order={payment.order} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 grid-cols-2">
                 {payment.invoices && payment.invoices.length > 0 && (
                     <Card className="flex-1">
                         <CardHeader>

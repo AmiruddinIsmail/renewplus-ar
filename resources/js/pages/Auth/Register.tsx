@@ -34,7 +34,7 @@ export default function Register() {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Register
                     </CardTitle>
                     <CardDescription>
@@ -57,7 +57,7 @@ export default function Register() {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.name}
                             </Label>
                         </div>
@@ -75,7 +75,7 @@ export default function Register() {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.email}
                             </Label>
                         </div>
@@ -93,7 +93,7 @@ export default function Register() {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password}
                             </Label>
                         </div>
@@ -114,7 +114,7 @@ export default function Register() {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password_confirmation}
                             </Label>
                         </div>

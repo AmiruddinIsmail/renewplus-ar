@@ -44,7 +44,7 @@ export const customerColumns = (
                 return (
                     <Link
                         href={route("customers.show", row.original.id)}
-                        className="text-primary hover:underline"
+                        className=" text-primary hover:underline"
                     >
                         {row.getValue("uuid")}
                     </Link>

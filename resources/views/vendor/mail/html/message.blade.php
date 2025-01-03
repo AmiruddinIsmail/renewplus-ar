@@ -2,9 +2,9 @@
     {{-- Header --}}
     <x-slot:header>
         <x-mail::header :url="config('app.url')">
-            {{ config("app.name") }}
+            {{ config('app.name') }}
         </x-mail::header>
-    </x-slot>
+    </x-slot:header>
 
     {{-- Body --}}
     {{ $slot }}
@@ -15,14 +15,13 @@
             <x-mail::subcopy>
                 {{ $subcopy }}
             </x-mail::subcopy>
-        </x-slot>
+        </x-slot:subcopy>
     @endisset
 
     {{-- Footer --}}
     <x-slot:footer>
         <x-mail::footer>
-            © {{ date("Y") }} {{ config("app.name") }}.
-            {{ __("All rights reserved.") }}
+            © {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved.') }}
         </x-mail::footer>
-    </x-slot>
+    </x-slot:footer>
 </x-mail::layout>

@@ -38,7 +38,7 @@ export default function Login({ status, canResetPassword }: Props) {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Login
                     </CardTitle>
                     <CardDescription>
@@ -61,7 +61,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.email}
                             </Label>
                         </div>
@@ -87,7 +87,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password}
                             </Label>
                         </div>

@@ -32,7 +32,7 @@ export default function Edit({
             <Head title="Profile" />
 
             <div className="">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex gap-4 justify-between items-start">
                     <UpdateProfileInformation
                         mustVerifyEmail={mustVerifyEmail}
                         status={status}

@@ -26,10 +26,10 @@ export function InvoicesTableAction() {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost">
-                    <EllipsisVerticalIcon className="h-4 w-4" />
+                    <EllipsisVerticalIcon className="w-4 h-4" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="mr-24 w-48">
+            <DropdownMenuContent className="w-48 mr-24">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>

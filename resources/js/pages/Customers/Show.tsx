@@ -44,7 +44,7 @@ export default function Page({ customer }: { customer: Customer }) {
                 <Separator className="my-2" />
 
                 <div className="grid gap-6">
-                    <div className="grid gap-4 md:grid-cols-4">
+                    <div className="grid md:grid-cols-4 gap-4">
                         <StatisticCard />
                         <StatisticCard />
                         <StatisticCard />

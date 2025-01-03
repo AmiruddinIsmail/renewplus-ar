@@ -44,7 +44,7 @@ export const invoiceColumns = (
                 return (
                     <Link
                         href={route("invoices.show", row.original.id)}
-                        className="text-primary hover:underline"
+                        className=" text-primary hover:underline"
                     >
                         {row.getValue("reference_no")}
                     </Link>
@@ -122,7 +122,7 @@ export const invoiceColumns = (
             header: ({ column }) => {
                 return (
                     <>
-                        <div className="flex items-center justify-end gap-0">
+                        <div className="flex items-center gap-0 justify-end">
                             Status
                             <Button
                                 variant="ghost"

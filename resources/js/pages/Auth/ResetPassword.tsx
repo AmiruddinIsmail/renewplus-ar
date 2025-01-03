@@ -39,7 +39,7 @@ export default function ResetPassword({ token, email }: Props) {
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl">
+                    <CardTitle className="text-2xl text-center">
                         Reset Password
                     </CardTitle>
                     <CardDescription>
@@ -62,7 +62,7 @@ export default function ResetPassword({ token, email }: Props) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.email}
                             </Label>
                         </div>
@@ -81,7 +81,7 @@ export default function ResetPassword({ token, email }: Props) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password}
                             </Label>
                         </div>
@@ -105,7 +105,7 @@ export default function ResetPassword({ token, email }: Props) {
                                 }
                             />
 
-                            <Label className="text-red-500">
+                            <Label className=" text-red-500">
                                 {errors.password_confirmation}
                             </Label>
                         </div>

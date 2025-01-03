@@ -24,14 +24,14 @@ export default function InvoiceDetail({ invoice }: Props) {
     console.log(invoice);
     return (
         <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 grid-cols-2">
                 <Card className="flex-1">
                     <CardHeader>
                         <CardTitle>Invoice Detail</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="grid gap-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="reference_no">
                                         Reference No
@@ -58,7 +58,7 @@ export default function InvoiceDetail({ invoice }: Props) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="tenure">
                                         Monthly Fee (RM)
@@ -85,7 +85,7 @@ export default function InvoiceDetail({ invoice }: Props) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="tenure">
                                         Credit Applied (RM)
@@ -112,7 +112,7 @@ export default function InvoiceDetail({ invoice }: Props) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid gap-4 grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="tenure">Status</Label>
                                     <Input
@@ -142,7 +142,7 @@ export default function InvoiceDetail({ invoice }: Props) {
                 <CustomerOrder order={invoice.order} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 grid-cols-2">
                 {invoice.charges && invoice.charges.length > 0 && (
                     <Card className="flex-1">
                         <CardHeader>
