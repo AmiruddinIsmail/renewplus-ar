@@ -1,25 +1,30 @@
-import { Config } from "ziggy-js";
-
-export type MenuItem = {
-    label: string;
-    route: string;
-    url: string;
-    badge: number | null;
-    icon: string;
-};
+import dynamicIconImports from "lucide-react/dynamicIconImports";
 
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
     auth: {
         user: User;
+        roles: string[];
     };
-    ziggy: Config & { location: string };
-    menu: MenuItem[];
+    menu: Menu[];
+    flash?: FlashMessage;
+};
+
+type FlashMessage = {
+    message: string;
+    error: boolean;
+};
+
+type Menu = {
+    title: string;
+    link: string;
+    name: string;
+    icon: keyof typeof dynamicIconImports;
 };
 
 export {
-    MenuItem,
+    Menu,
     PageProps,
     Datatable,
     Meta,
@@ -28,4 +33,7 @@ export {
     Order,
     Address,
     Invoice,
+    Payment,
+    InvoicePayment,
+    Charge,
 };

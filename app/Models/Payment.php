@@ -2,22 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\Traits\HasCurrency;
+use App\Models\Traits\HasResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Payment extends Model
 {
-    use HasFactory;
+    use HasCurrency, HasFactory, HasResolver;
 
-    protected $guarded = [];
+    public const PREFIX = 'PAY';
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function invoices(): BelongsToMany
@@ -25,18 +31,8 @@ class Payment extends Model
         return $this->belongsToMany(Invoice::class)->withPivot('amount');
     }
 
-    public function transactions(): MorphMany
+    public function transaction(): MorphOne
     {
-        return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
-    public function scopeUnresolved(Builder $query): void
-    {
-        $query->where('unresolved', true);
-    }
-
-    public function scopeResolved(Builder $query): void
-    {
-        $query->where('unresolved', false);
+        return $this->MorphOne(Transaction::class, 'transactionable');
     }
 }

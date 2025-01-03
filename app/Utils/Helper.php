@@ -3,39 +3,31 @@
 namespace App\Utils;
 
 use Carbon\Carbon;
-use Exception;
 
 class Helper
 {
+    /**
+     * Summary of formatMoney
+     */
     public static function formatMoney(int $money): string
     {
         return number_format($money / 100, 2, '.', ',');
     }
 
-    public static function monthlyAniversaryDays(Carbon $today): array
+    /**
+     * Summary of referenceNoConvention
+     */
+    public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $dateAt): string
     {
-        try {
-            $days = [$today->day];
-            if ($today->isEndOfMonth()) {
-                if ($today->day == 28) {
-                    $days = array_merge($days, [29, 30, 31]);
-                }
-                if ($today->day == 29) {
-                    $days = array_merge($days, [30, 31]);
-                }
-                if ($today->day == 30) {
-                    $days = array_merge($days, [31]);
-                }
-            }
-
-            return $days;
-        } catch (Exception $e) {
-            return [$today->day];
-        }
+        return $prefix . '-' . $dateAt->format('ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 
-    public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $today): string
+    public static function convertPayloadToQueryParamsWithoutEncode(array $params): string
     {
-        return $prefix . '-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
+        return implode('&', array_map(
+            fn ($key, $value): string => "{$key}={$value}",
+            array_keys($params),
+            $params
+        ));
     }
 }

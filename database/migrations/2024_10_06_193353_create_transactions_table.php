@@ -11,17 +11,18 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->unsignedBigInteger('transactionable_id');
             $table->string('transactionable_type');
 
-            $table->date('transaction_at');
             $table->integer('amount');
             $table->boolean('debit')->default(true);
 
-            $table->dateTime('processed_at')->nullable();
+            $table->string('gateway_status')->nullable();
+            $table->string('gateway_id')->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

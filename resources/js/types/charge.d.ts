@@ -1,12 +1,13 @@
 export type Charge = {
     id: number;
-    customer_id: number;
     reference_no: string;
+    charged_at: string;
     type: string;
     amount: number;
-    charged_at: string;
     unresolved: boolean;
-    invoice_id: number;
     created_at: string;
-    updated_at: string;
+
+    customer_id: number;
+    order_id: number;
+    invoice_id: number;
 };

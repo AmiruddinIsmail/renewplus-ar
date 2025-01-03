@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Users\UserTable;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -13,7 +14,9 @@ class UserController extends Controller
     public function index(Request $request, UserTable $action): Response
     {
         return Inertia::render('Users/Index', [
-            'table' => fn () => UserResource::collection($action->handle($request->limit ?? 10)),
+            'table' => fn (): AnonymousResourceCollection => UserResource::collection($action->handle([
+                'limit' => $request->limit,
+            ])),
         ]);
     }
 
@@ -22,7 +25,7 @@ class UserController extends Controller
         return Inertia::render('Users/Create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         $data = $request->validate([
             'name' => 'required',

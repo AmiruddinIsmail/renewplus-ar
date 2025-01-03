@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Views\Menu;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
-use Spatie\Permission\Models\Role;
-use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,22 +31,21 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $response = [
+        $menu = Cache::remember('menu', now()->addDay(), function () {
+            return Menu::all();
+        });
+
+        return [
             ...parent::share($request),
-            'ziggy' => fn () => [
-                ...(new Ziggy)->toArray(),
-                'location' => $request->url(),
+            'auth' => [
+                'user' => $request->user(),
+                'roles' => $request->user() ? Cache::remember('roles_' . $request->user()->id, now()->addHour(), fn () => $request->user()->getRoleNames()) : [],
+            ],
+            'menu' => $menu,
+            'flash' => [
+                'error' => fn () => $request->session()->get('error') ?? false,
+                'message' => fn () => $request->session()->get('message'),
             ],
         ];
-
-        if ($request->user() === null) {
-            return $response;
-        }
-
-        $response['auth']['user'] = $request->user()->load('roles:id,name');
-        $response['roles'] = Cache::remember('roles', (60 * 60 * 24), fn () => Role::all());
-        $response['menu'] = (new Menu($request->user()))->render();
-
-        return $response;
     }
 }

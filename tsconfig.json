@@ -19,7 +19,6 @@
     "include": [
         "resources/js/**/*.ts",
         "resources/js/**/*.tsx",
-        "resources/js/**/*.d.ts",
-        "resources/js/bootstrap.ts"
+        "resources/js/**/*.d.ts"
     ]
 }

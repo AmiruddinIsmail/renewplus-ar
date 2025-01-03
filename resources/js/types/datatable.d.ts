@@ -1,5 +1,5 @@
-export type Datatable = {
-    data: any[];
+export type Datatable<T> = {
+    data: T[];
     links: DatatableLink;
     meta: Meta;
 };

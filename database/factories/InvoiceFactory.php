@@ -2,7 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Customer;
+use App\Models\Order;
+use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,17 +18,18 @@ class InvoiceFactory extends Factory
      */
     public function definition(): array
     {
-        $customer = Customer::inRandomOrder()->first();
-        $charge_fee = $this->faker->numberBetween(100, 1000);
+        $order = Order::inRandomOrder()->first();
+        $charge_amount = $this->faker->numberBetween(100, 1000);
 
         return [
-            'customer_id' => $customer->id,
-            'reference_no' => $this->faker->uuid(),
+            'customer_id' => $order->customer_id,
+            'order_id' => $order->id,
+            'reference_no' => Helper::referenceNoConvention('INV', mt_rand(1, 9999), now()),
             'issue_at' => $this->faker->date(),
             'due_at' => $this->faker->date(),
-            'subscription_fee' => $customer->subscription_fee,
-            'charge_fee' => $charge_fee,
-            'unresolved_amount' => $customer->subscription_fee + $charge_fee,
+            'subscription_amount' => $order->subscription_amount,
+            'charge_amount' => $charge_amount,
+            'unresolved_amount' => $order->subscription_amount + $charge_amount,
         ];
     }
 }

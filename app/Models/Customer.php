@@ -2,25 +2,30 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\Traits\HasCurrency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Customer extends Model
 {
-    use HasFactory;
-
-    protected $guarded = [];
-
-    protected $casts = [
-        'contract_at' => 'datetime:d/m/Y h:i A',
-    ];
+    use HasCurrency, HasFactory;
 
     public function addresses(): MorphMany
     {
         return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function order(): HasOne
+    {
+        return $this->hasOne(Order::class)->latestOfMany();
     }
 
     public function invoices(): HasMany
@@ -41,10 +46,5 @@ class Customer extends Model
     public function charges(): HasMany
     {
         return $this->hasMany(Charge::class);
-    }
-
-    public function scopeMonthlyAniversary(Builder $query, array $days): void
-    {
-        $query->whereRaw('DAY(contract_at) in (' . implode(',', $days) . ')');
     }
 }

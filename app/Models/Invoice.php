@@ -2,37 +2,52 @@
 
 namespace App\Models;
 
+use App\Models\Enums\InvoiceStatus;
+use App\Models\Traits\HasCurrency;
+use App\Models\Traits\HasResolver;
 use Carbon\Carbon;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Collection;
 
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasCurrency, HasFactory, HasResolver;
 
-    public const STATUS_PENDING = 'pending';
-
-    public const STATUS_OVERDUE = 'overdue';
-
-    public const STATUS_PAID = 'paid';
-
-    public const STATUS_PARTIAL_PAID = 'partial';
-
-    protected $guarded = [];
+    public const PREFIX = 'INV';
 
     protected $casts = [
         'created_at' => 'datetime:d/m/Y h:i A',
+        'status' => InvoiceStatus::class,
     ];
+
+    public static function runnableOn(Carbon $date, string $paymentDriver): Collection
+    {
+        return self::query()
+            ->withWhereHas('order', function ($builder) use ($paymentDriver): void {
+                $builder->where('payment_gateway', $paymentDriver)->select('id', 'reference_no', 'payment_reference');
+            })
+            ->whereHas('transaction', function ($builder): void {
+                $builder->whereNull('gateway_status')->whereNull('gateway_id');
+            })
+            ->whereDate('issue_at', $date->format('Y-m-d'))
+            ->unresolved()
+            ->get();
+    }
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function charges(): HasMany
@@ -50,19 +65,9 @@ class Invoice extends Model
         return $this->belongsToMany(Credit::class)->withPivot('amount', 'created_at');
     }
 
-    public function transactions(): MorphMany
+    public function transaction(): MorphOne
     {
-        return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
-    public function scopeUnresolved(Builder $query): void
-    {
-        $query->where('unresolved', true);
-    }
-
-    public function scopeResolved(Builder $query): void
-    {
-        $query->where('unresolved', false);
+        return $this->morphOne(Transaction::class, 'transactionable');
     }
 
     public function createdAt(): Attribute

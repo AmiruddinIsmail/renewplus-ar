@@ -1,15 +1,13 @@
-import { Charge } from "./charge";
-import { Customer } from "./customer";
-import { Payment } from "./payment";
-
 export type Invoice = {
     id: number;
     customer_id: number;
     reference_no: string;
+    status: string;
     issue_at: string;
     due_at: string;
-    subscription_fee: number;
-    charge_fee: number;
+    subscription_amount: number;
+    charge_amount: number;
+    amount: string;
     credit_paid: number;
     over_paid: number;
     paid_amount: number;
@@ -17,8 +15,9 @@ export type Invoice = {
     unresolved_amount: number;
     created_at: string;
     updated_at: string;
-
-    payments: Payment[];
-    charges: Charge[];
-    customer: Customer;
+    customer?: Customer;
+    order?: Order;
+    charges?: Charge[];
+    payments?: Payment[];
+    pivot: InvoicePayment;
 };

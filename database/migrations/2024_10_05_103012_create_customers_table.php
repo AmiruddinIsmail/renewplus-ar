@@ -15,17 +15,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('status')->default('active');
-
-            $table->integer('tenure');
-            $table->integer('subscription_fee');
-            $table->dateTime('contract_at')->nullable();
-
-            $table->string('payment_gateway')->nullable();
-            $table->string('payment_reference')->nullable();
-
-            $table->dateTime('completed_at')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

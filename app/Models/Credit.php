@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\Traits\HasCurrency;
+use App\Models\Traits\HasResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,13 +12,18 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Credit extends Model
 {
-    use HasFactory;
+    use HasCurrency, HasFactory, HasResolver;
 
-    protected $guarded = [];
+    public const PREFIX = 'CRT';
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function invoices(): BelongsToMany
@@ -28,15 +34,5 @@ class Credit extends Model
     public function transactions(): MorphMany
     {
         return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
-    public function scopeUnresolved(Builder $query): void
-    {
-        $query->where('unresolved', true);
-    }
-
-    public function scopeResolved(Builder $query): void
-    {
-        $query->where('unresolved', false);
     }
 }

@@ -11,14 +11,15 @@ return new class extends Migration
         Schema::create('charges', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->string('reference_no')->unique();
+            $table->date('charged_at');
             $table->string('type');
             $table->integer('amount');
-            $table->date('charged_at');
             $table->boolean('unresolved')->default(true);
             $table->foreignId('invoice_id')->nullable()->constrained('invoices')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

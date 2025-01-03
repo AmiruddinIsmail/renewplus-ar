@@ -2,14 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Customer;
-use App\Models\Invoice;
-use App\Models\Payment;
 use App\Models\User;
-use App\Utils\Helper;
-use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,60 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // User::factory(10)->create();
 
-        $this->call(RolePermissionSeeder::class);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
 
-        $u = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@mail.com',
-        ]);
-
-        $u->assignRole('admin');
-
-        Customer::factory()->count(1)->create();
-
-        // set upfront invoice & payment
-        $customers = Customer::all();
-        foreach ($customers as $customer) {
-            $invoice = $customer->invoices()->create([
-                'reference_no' => Helper::referenceNoConvention('INV', $customer->id, $customer->contract_at),
-                'issue_at' => $customer->contract_at,
-                'due_at' => Carbon::parse($customer->contract_at->format('Y-m-d'))->addDay(),
-                'subscription_fee' => $customer->subscription_fee,
-                'charge_fee' => 0,
-                'unresolved' => false,
-                'unresolved_amount' => 0,
-                'status' => Invoice::STATUS_PAID,
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@mail.com'],
+            [
+                'name' => 'Admin',
+                'email' => 'admin@mail.com',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]);
 
-            $payment = $customer->payments()->create([
-                'reference_no' => Helper::referenceNoConvention('PAY', $customer->id, $customer->contract_at),
-                'paid_at' => $customer->contract_at,
-                'amount' => $customer->subscription_fee,
-                'unresolved' => false,
-                'unresolved_amount' => 0,
-            ]);
-
-            $payment->invoices()->attach($invoice, ['amount' => $invoice->subscription_fee, 'created_at' => now(), 'updated_at' => now()]);
-
-            $invoice->transactions()->create([
-                'customer_id' => $invoice->customer_id,
-                'transaction_at' => $invoice->issue_at,
-                'debit' => true,
-                'amount' => $invoice->subscription_fee,
-            ]);
-
-            $payment->transactions()->create([
-                'customer_id' => $payment->customer_id,
-                'transaction_at' => $payment->paid_at,
-                'debit' => false,
-                'amount' => $payment->amount,
-            ]);
-        }
-
-        // $this->call(PaymentSeeder::class);
-        // Invoice::factory()->count(5)->create();
-        // Payment::factory()->count(2)->create();
+        $admin->assignRole($adminRole);
 
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
-use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,13 +17,10 @@ class CreditFactory extends Factory
      */
     public function definition(): array
     {
-        $amount = $this->faker->numberBetween(1000, 10000);
-
         return [
             'customer_id' => Customer::inRandomOrder()->first(),
-            'reference_no' => Helper::referenceNoConvention('CRE', mt_rand(1, 9999), now()),
-            'amount' => $amount,
-            'unresolved_amount' => $amount,
+            'reference_no' => $this->faker->uuid(),
+            'amount' => $this->faker->numberBetween(1000, 10000),
         ];
     }
 }
