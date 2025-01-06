@@ -2,9 +2,14 @@ version: "3.8"
 
 services:
     app:
-        image: "amiruddinismail/car-first:latest"
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: amir/renewplus_ar
         volumes:
             - ".:/var/www/html"
+        networks:
+            - app-network
         environment:
             PHP_FPM_POOL_NAME: "app"
             AUTORUN_ENABLED: "${AUTORUN_ENABLED}"
@@ -49,5 +54,4 @@ services:
             MAIL_FROM_NAME: "${MAIL_FROM_NAME}"
             VITE_APP_NAME: "${APP_NAME}"
         ports:
-            - 3000
-            - 80
+            - 8000
