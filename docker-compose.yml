@@ -50,7 +50,7 @@ services:
                 VITE_APP_NAME: "${APP_NAME}"
         restart: always
         ports:
-            - 3000
+            - 8000
         networks:
             - dokploy-network
         labels:
