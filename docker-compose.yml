@@ -1,7 +1,7 @@
-version: "3"
+version: "3.8"
 
 services:
-    next-app:
+    app:
         image: "amiruddinismail/renewplusar:latest"
         volumes:
             - ".:/var/www/html"
@@ -48,18 +48,5 @@ services:
             MAIL_FROM_ADDRESS: "${MAIL_FROM_ADDRESS}"
             MAIL_FROM_NAME: "${MAIL_FROM_NAME}"
             VITE_APP_NAME: "${APP_NAME}"
-        restart: always
         ports:
             - 8000
-        networks:
-            - dokploy-network
-        labels:
-            - traefik.enable=true
-            - traefik.http.routers.next-app.rule=Host(`next-app.dokploy.com`)
-            - traefik.http.routers.next-app.entrypoints=websecure
-            - traefik.http.routers.next-app.tls.certResolver=letsencrypt
-            - traefik.http.services.next-app.loadbalancer.server.port=3000
-
-networks:
-    dokploy-network:
-        external: true
